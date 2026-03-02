@@ -1,0 +1,11 @@
+node_modules/
+client/node_modules/
+client/build/
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+.env
+.git
+.gitignore
+README.md

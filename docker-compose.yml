@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
+      - DB_PATH=/app/data/parkeren.db
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+      - SMTP_FROM=${SMTP_FROM:-noreply@humancampus.nl}
+      - APP_URL=${APP_URL:-http://localhost:5000}
+    volumes:
+      - parkeren-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  parkeren-data:
