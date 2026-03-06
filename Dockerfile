@@ -2,8 +2,8 @@
 FROM node:20-alpine AS client-build
 
 WORKDIR /app/client
-COPY client/package.json client/package-lock.json ./
-RUN npm ci
+COPY client/package.json client/package-lock.json* ./
+RUN npm install
 COPY client/ ./
 RUN npm run build
 
@@ -16,8 +16,11 @@ RUN apk add --no-cache python3 make g++
 WORKDIR /app
 
 # Install server dependencies
-COPY package.json package-lock.json ./
-RUN npm ci --omit=dev && apk del python3 make g++
+COPY package.json package-lock.json* ./
+RUN npm install --omit=dev
+
+# Cleanup build tools to reduce image size
+RUN apk del python3 make g++
 
 # Copy server source
 COPY server/ ./server/
